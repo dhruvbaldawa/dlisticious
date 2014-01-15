@@ -8,22 +8,23 @@
         <!-- build:js scripts/lib.js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="lib/gridster/jquery.gridster.js"></script>
+        <script src="bower_components/handlebars/handlebars.js"></script>
         <!-- endbuild -->
         <!-- build:js scripts/app.js -->
         <script src="scripts/app.js"></script>
         <!-- endbuild -->
+        <script id="courses-template" type="text/x-handlebars-template">
+            <h2>Courses</h2>
+            <ul>
+            {{#each courses}}
+                <li>{{name}}</li>
+            {{/each}}
+            </ul>
+        </script>
     </head>
     <body>
         <h1>dListicious!</h1>
-        <h2>Current Courses</h2>
-        <ul>
-            <li>Unpredictable? Randomness, Chance and Free Will</li>
-            <li>Social and Economic Networks: Models and Analysis</li>
-            <li>Programming Mobile Applications for Android Handheld Systems</li>
-            <li>How to Change the World</li>
-            <li>Control of Mobile Robots</li>
-            <li>Moralities of Everyday Life</li>
-        </ul>
+        <div id="courses"></div>
         <h2>Currently Reading</h2>
         <ul>
             <li>The Pragramatic Programmer</li>

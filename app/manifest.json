@@ -13,16 +13,20 @@
             "scripts/background.js"
         ]
     },
-  "page_action": {
+    "page_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+        "19": "images/icon-19.png",
+        "38": "images/icon-38.png"
     },
-    "default_title": "dlisticious",
+    "default_title": "dListicious",
     "default_popup": "popup.html"
-  },
-  "chrome_url_overrides" : {
-    "newtab": "newtab.html"
-  },
-  "options_page": "options.html"
+    },
+    "chrome_url_overrides" : {
+        "newtab": "newtab.html"
+    },
+    "options_page": "options.html",
+    "permissions": [
+        "https://www.coursera.org/"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
