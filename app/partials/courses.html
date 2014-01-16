@@ -1,0 +1,9 @@
+<div ng-controller="CourseCtrl" ng-init="fetchCourses()">
+    <h2>Courses</h2>
+    <ul ng-repeat="course in courses">
+        <li>
+            <img ng-src="{{ course.small_icon }}"/>
+            <a ng-href="{{ course.courses[0].home_link }}">{{ course.name }}</a>
+        </li>
+    </ul>
+</div>

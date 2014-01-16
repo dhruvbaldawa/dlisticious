@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="dApp" ng-csp>
     <head>
         <!-- build:css styles/style.css -->
         <link href="styles/main.css" rel="stylesheet">
@@ -8,23 +8,15 @@
         <!-- build:js scripts/lib.js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="lib/gridster/jquery.gridster.js"></script>
-        <script src="bower_components/handlebars/handlebars.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <!-- endbuild -->
         <!-- build:js scripts/app.js -->
         <script src="scripts/app.js"></script>
         <!-- endbuild -->
-        <script id="courses-template" type="text/x-handlebars-template">
-            <h2>Courses</h2>
-            <ul>
-            {{#each courses}}
-                <li>{{name}}</li>
-            {{/each}}
-            </ul>
-        </script>
     </head>
-    <body>
+    <body ng-controller="MainCtrl">
         <h1>dListicious!</h1>
-        <div id="courses"></div>
+        <div ng-include="'partials/courses.html'"></div>
         <h2>Currently Reading</h2>
         <ul>
             <li>The Pragramatic Programmer</li>
