@@ -9,22 +9,35 @@ dApp.config ['$compileProvider', ($compileProvider) ->
 dApp.constant '$', $
 
 # Service to get courses from Coursera
-dApp.factory 'CourseraService', ['$', '$q', 'storage', ($, $q, storage) ->
-    COURSE_URL = 'https://www.coursera.org/maestro/api/topic/information?topic-id='
-    prefix = 'course_'
+dApp.factory 'CourseService', ['$http', '$q', 'storage', ($http, $q, storage) ->
+    COURSERA_URL = 'https://www.coursera.org/maestro/api/topic/information?topic-id='
+    COURSE_PREFIX = 'course_'
+    REGISTRY_KEY = 'course_registry'
 
-    fetchCourse: (course, refresh) ->
+    class Course
+        constructor: (@name, @title, @url, @thumbnail, @active, @start_date, @provider, @remote_fetch) ->
+
+    registerCourse: (course_name) ->
+        course_registry = storage.get(REGISTRY_KEY) or []
+        if course_name not in course_registry
+            course_registry.push course_name
+        storage.set REGISTRY_KEY, course_registry
+
+    fetchCourse: (course_name, refresh) ->
+        self = @
         def = $q.defer()
-        key = prefix + course
+        key = "#{COURSE_PREFIX}#{course_name}"
 
         # Only fetch if not already cached, or when asked for refresh
         if !storage.get(key)? or refresh
-            $.getJSON(COURSE_URL + course)
-            .done (data) ->
+            $http.get("#{COURSE_URL}#{course_name}")
+            .success (data) ->
+                self.registerCourse(course_name)
                 storage.set key, data
                 def.resolve(data)
-            .fail (jqXHR, textStatus, error) ->
-                def.reject(error)
+
+            .error (data, status, headers, config) ->
+                def.reject(data)
         else
             def.resolve storage.get(key)
 
@@ -36,12 +49,12 @@ dApp.controller 'MainCtrl', ($scope) ->
     $scope.foo = 'foos';
 
 # Course Controller
-dApp.controller 'CourseCtrl', ['$scope', '$q', 'CourseraService', ($scope, $q, CourseraService) ->
+dApp.controller 'CourseCtrl', ['$scope', '$q', 'CourseService', ($scope, $q, CourseService) ->
     $scope.course_list = ['networksonline', 'randomness', 'android', 'moralities', 'conrob', 'changetheworld', 'android', 'posa', 'mobilecloud']
     $scope.courses = []
 
     $scope.fetchCourses = (refresh) ->
-        defs = (CourseraService.fetchCourse(course) for course in $scope.course_list)
+        defs = (CourseService.fetchCourse(course, refresh) for course in $scope.course_list)
 
         $q.all(defs).then (data) ->
             $scope.courses = data;
