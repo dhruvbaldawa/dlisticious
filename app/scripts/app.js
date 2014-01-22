@@ -13,38 +13,46 @@
 
   dApp.factory('StorageService', [
     '$http', '$q', 'storage', function($http, $q, storage) {
-      var LIST_REGISTRY_KEY, list_registry, updateLocalStorage, _ref;
+      var LIST_REGISTRY_KEY, updateLocalStorage, _list_registry, _ref;
       LIST_REGISTRY_KEY = 'lists';
-      list_registry = (_ref = storage.get(LIST_REGISTRY_KEY)) != null ? _ref : {};
+      _list_registry = (_ref = storage.get(LIST_REGISTRY_KEY)) != null ? _ref : {};
       updateLocalStorage = function() {
-        return storage.set(LIST_REGISTRY_KEY, list_registry);
+        return storage.set(LIST_REGISTRY_KEY, _list_registry);
       };
       return {
-        addList: function(list, items) {
-          if (name in list_registry) {
+        addList: function(title, items) {
+          var id;
+          if (!title) {
+            console.error("Empty name provided.");
+            return false;
+          }
+          id = title.split(' ').join('_').toLowerCase();
+          if (id in _list_registry) {
+            console.error("List " + list + " already exists.");
             return false;
           } else {
-            list_registry[list] = {
+            _list_registry[id] = {
               fields: ['title', 'description'],
-              title: typeof title !== "undefined" && title !== null ? title : 'Untitled List',
+              title: title,
               items: items != null ? items : []
             };
+            updateLocalStorage();
+            return true;
           }
-          storage.set(list_registry);
+        },
+        removeList: function(id) {
+          delete _list_registry[id];
           return updateLocalStorage();
         },
-        removeList: function(list) {
-          delete list_registry[list];
+        addItem: function(id, item) {
+          _list_registry[id].items.push(item);
           return updateLocalStorage();
         },
-        addItem: function(list, item) {
-          list_registry[list].items.push(item);
+        removeItem: function(id, index) {
+          delete _list_registry[list].items[index];
           return updateLocalStorage();
         },
-        removeItem: function(list, index) {
-          delete list_registry[list].items[index];
-          return updateLocalStorage();
-        }
+        list_registry: _list_registry
       };
     }
   ]);
@@ -56,7 +64,27 @@
   dApp.controller('ListCtrl', [
     '$scope', '$q', 'StorageService', function($scope, $q, StorageService) {
       $scope.lr = StorageService.list_registry;
-      return $scope.addList = function() {};
+      $scope.addListFormError = '';
+      $scope.addList = function($event) {
+        var title;
+        title = $event.target.title.value;
+        if (!StorageService.addList(title)) {
+          return $scope.addListFormError = 'Error creating list, try different name.';
+        } else {
+          return $scope.addListFormError = 'List created successfully.';
+        }
+      };
+      return $scope.addListItem = function($event) {
+        var item, list_id;
+        item = {
+          title: $event.target.title.value,
+          description: $event.target.description.value
+        };
+        list_id = $event.target.list_id.value;
+        if (!StorageService.addItem(list_id, item)) {
+          return alert('Error adding list item');
+        }
+      };
     }
   ]);
 

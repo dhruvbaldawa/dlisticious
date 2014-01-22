@@ -11,35 +11,45 @@ dApp.constant '$', $
 # Service to get courses from Coursera
 dApp.factory 'StorageService', ['$http', '$q', 'storage', ($http, $q, storage) ->
     LIST_REGISTRY_KEY = 'lists'
-    list_registry = storage.get(LIST_REGISTRY_KEY) ? {}
+    _list_registry = storage.get(LIST_REGISTRY_KEY) ? {}
 
     updateLocalStorage = () ->
-        storage.set(LIST_REGISTRY_KEY, list_registry)
+        storage.set(LIST_REGISTRY_KEY, _list_registry)
 
 
-    addList: (list, items) ->
+    addList: (title, items) ->
         # check if already not in registry
-        if name of list_registry
+        if !title
+            console.error "Empty name provided."
+            return false
+
+        # clear out the spaces from the name
+        id = title.split(' ').join('_').toLowerCase()
+
+        if id of _list_registry
+            console.error "List #{list} already exists."
             return false
         else
-            list_registry[list] =
+            _list_registry[id] =
                 fields: ['title', 'description']
-                title: title ? 'Untitled List'
+                title: title
                 items: items ? []
-        storage.set(list_registry)
+            updateLocalStorage()
+            return true
+
+    removeList: (id) ->
+        delete _list_registry[id]
         updateLocalStorage()
 
-    removeList: (list) ->
-        delete list_registry[list]
+    addItem: (id, item) ->
+        _list_registry[id].items.push(item)
         updateLocalStorage()
 
-    addItem: (list, item) ->
-        list_registry[list].items.push(item)
+    removeItem: (id, index) ->
+        delete _list_registry[list].items[index]
         updateLocalStorage()
 
-    removeItem: (list, index) ->
-        delete list_registry[list].items[index]
-        updateLocalStorage()
+    list_registry: _list_registry
 ]
 
 # Main Controller
@@ -50,6 +60,23 @@ dApp.controller 'MainCtrl', ($scope) ->
 dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, StorageService) ->
     # sorry for the small name, but this saves me from watch expressions.
     $scope.lr = StorageService.list_registry
+    $scope.addListFormError = ''  # move this to an alert later.
 
-    $scope.addList = () ->
+    $scope.addList = ($event) ->
+        title = $event.target.title.value
+
+        if not StorageService.addList(title)
+            $scope.addListFormError = 'Error creating list, try different name.'
+        else
+            $scope.addListFormError = 'List created successfully.'
+
+    $scope.addListItem = ($event) ->
+        item =
+            title: $event.target.title.value
+            description: $event.target.description.value
+        list_id = $event.target.list_id.value
+
+        if not StorageService.addItem(list_id, item)
+            alert 'Error adding list item'
+
 ]

@@ -17,12 +17,29 @@
         <script src="scripts/app.js"></script>
         <!-- endbuild -->
     </head>
-    <body ng-controller="MainCtrl">
+    <body ng-controller="ListCtrl">
         <h1>dListicious!</h1>
-        <div ng-include="'partials/courses.html'"></div>
-        <h2>Currently Reading</h2>
-        <ul>
-            <li>The Pragramatic Programmer</li>
-        </ul>
+        <h2>Add List</h2>
+        <form ng-submit="addList($event)">
+            Title: <input type="text" name="title" required />
+            <input type="submit" name="submit" value="Create List" />
+            {{ addListFormError }}
+        </form>
+        <div id="lists" ng-repeat="(id, list) in lr">
+            <h2>{{ list.title }}</h2>
+            <form ng-submit="addListItem($event)">
+                <h3>Add item to the list</h3>
+                Title: <input type="text" name="title" />
+                Description: <input type="text" name="description" />
+                <input type="hidden" name="list_id" value="{{ id }}" />
+                <input type="submit" name="submit" value="Add Item" />
+            </form>
+            <ul>
+                <li ng-repeat="item in list.items" data-number="{{ $index }}">
+                    {{ item.title }}<br/>
+                    <h4>{{ item.description }}</h4>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>
