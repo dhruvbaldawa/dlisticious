@@ -1,4 +1,4 @@
-dApp = angular.module 'dApp', ['angularLocalStorage'];
+dApp = angular.module 'dApp', ['angularLocalStorage', 'ui.sortable'];
 
 # Whitelist the chrome-extension URL schemes
 dApp.config ['$compileProvider', ($compileProvider) ->
@@ -71,6 +71,10 @@ dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, Stor
     # sorry for the small name, but this saves me from watch expressions.
     $scope.lr = StorageService.list_registry
     $scope.addListFormError = ''  # move this to an alert later.
+    $scope.items = [['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'],['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'],['foo', 'bar', 'choke', 'fee', 'fyi', 'ty']]
+    $scope.sortableOptions =
+        placeholder: "widget",
+        connectWith: ".column"
 
     $scope.addList = ($event) ->
         title = $event.target.title.value
@@ -98,10 +102,3 @@ dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, Stor
             alert 'item removed'
 
 ]
-
-# Enable gridster when the DOM is ready!
-$(document).ready () ->
-    $(".gridster ul").gridster
-        widget_margins: [10, 10],
-        widget_base_dimensions: [250, 250]
-

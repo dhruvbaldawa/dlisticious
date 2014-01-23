@@ -9,12 +9,14 @@
         <!-- endbuild -->
         <!-- build:js scripts/lib.js -->
         <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
         <script src="lib/gridster/jquery.gridster.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="lib/angularLocalStorage.js"></script>
         <script src="lib/angular-gridster.js"></script>
+        <script src="lib/sortable.js"></script>
         <!-- endbuild -->
         <!-- build:js scripts/app.js -->
         <script src="scripts/app.js"></script>
@@ -48,81 +50,13 @@
             </li>
         </ul> -->
         <div class="row">
-            <ul class="col-md-4 column">
-                <li class="widget">
+            <ul ui-sortable="sortableOptions" ng-model="item" ng-repeat="item in items" class="col-md-4 column">
+                <li ng-repeat="subitem in item" class="widget">
                     <div class="widget-head">
                         <h4>Head</h4>
                     </div>
                     <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-            </ul>
-            <ul class="col-md-4 column">
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-            </ul>
-            <ul class="col-md-4 column">
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
-                    </div>
-                </li>
-                <li class="widget">
-                    <div class="widget-head">
-                        <h4>Head</h4>
-                    </div>
-                    <div class="widget-content">
-                        <p>Content</p>
+                        <p>{{ subitem }}</p>
                     </div>
                 </li>
             </ul>

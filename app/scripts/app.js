@@ -1,7 +1,7 @@
 (function() {
   var dApp;
 
-  dApp = angular.module('dApp', ['angularLocalStorage']);
+  dApp = angular.module('dApp', ['angularLocalStorage', 'ui.sortable']);
 
   dApp.config([
     '$compileProvider', function($compileProvider) {
@@ -76,6 +76,11 @@
     '$scope', '$q', 'StorageService', function($scope, $q, StorageService) {
       $scope.lr = StorageService.list_registry;
       $scope.addListFormError = '';
+      $scope.items = [['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'], ['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'], ['foo', 'bar', 'choke', 'fee', 'fyi', 'ty']];
+      $scope.sortableOptions = {
+        placeholder: "widget",
+        connectWith: ".column"
+      };
       $scope.addList = function($event) {
         var title;
         title = $event.target.title.value;
@@ -108,12 +113,5 @@
       };
     }
   ]);
-
-  $(document).ready(function() {
-    return $(".gridster ul").gridster({
-      widget_margins: [10, 10],
-      widget_base_dimensions: [250, 250]
-    });
-  });
 
 }).call(this);
