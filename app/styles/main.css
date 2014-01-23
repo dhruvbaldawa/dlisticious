@@ -4,7 +4,12 @@ html {
     /* Defaults css for cssmin process */
 }
 
-ul.gridster li {
+ul.gridster > li {
     background: lightgray;
     overflow: scroll;
+}
+
+ul.item-list li {
+    list-style: none;
+    position: relative !important;
 }

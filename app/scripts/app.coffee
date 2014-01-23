@@ -85,5 +85,5 @@ dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, Stor
 $(document).ready () ->
     $(".gridster ul").gridster
         widget_margins: [10, 10],
-        widget_base_dimensions: [140, 140]
+        widget_base_dimensions: [250, 250]
 

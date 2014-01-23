@@ -36,9 +36,9 @@
                     <input type="hidden" name="list_id" value="{{ id }}" />
                     <input type="submit" name="submit" value="Add Item" />
                 </form>
-                <ul>
+                <ul class="item-list">
                     <li ng-repeat="item in list.items" data-number="{{ $index }}">
-                        {{ item.title }}<br/>
+                        <h3>{{ item.title }}</h3><br/>
                         <h4>{{ item.description }}</h4>
                     </li>
                 </ul>
