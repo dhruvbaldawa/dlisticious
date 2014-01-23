@@ -42,15 +42,26 @@
         },
         removeList: function(id) {
           delete _list_registry[id];
-          return updateLocalStorage();
+          updateLocalStorage();
+          return true;
         },
         addItem: function(id, item) {
-          _list_registry[id].items.push(item);
-          return updateLocalStorage();
+          if (item != null) {
+            _list_registry[id].items.push(item);
+            updateLocalStorage();
+            return true;
+          } else {
+            return false;
+          }
         },
         removeItem: function(id, index) {
-          delete _list_registry[list].items[index];
-          return updateLocalStorage();
+          if (index < _list_registry[id].items.length) {
+            _list_registry[id].items.splice(index, 1);
+            updateLocalStorage();
+            return true;
+          } else {
+            return false;
+          }
         },
         list_registry: _list_registry
       };
@@ -74,7 +85,7 @@
           return $scope.addListFormError = 'List created successfully.';
         }
       };
-      return $scope.addListItem = function($event) {
+      $scope.addListItem = function($event) {
         var item, list_id;
         item = {
           title: $event.target.title.value,
@@ -83,6 +94,16 @@
         list_id = $event.target.list_id.value;
         if (!StorageService.addItem(list_id, item)) {
           return alert('Error adding list item');
+        }
+      };
+      $scope.removeList = function(list_id) {
+        if (StorageService.removeList(list_id)) {
+          return alert('list removed');
+        }
+      };
+      return $scope.removeListItem = function(list_id, index) {
+        if (StorageService.removeItem(list_id, index)) {
+          return alert('item removed');
         }
       };
     }

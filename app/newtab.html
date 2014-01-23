@@ -28,7 +28,7 @@
         </form>
         <ul class="gridster">
             <li ng-repeat="(id, list) in lr" data-sizex="2" data-sizey="2">
-                <h2>{{ list.title }}</h2>
+                <h2>{{ list.title }}</h2><button ng-click="removeList(id)">Remove List</button>
                 <form ng-submit="addListItem($event)">
                     <h3>Add item to the list</h3>
                     Title: <input type="text" name="title" />
@@ -40,6 +40,7 @@
                     <li ng-repeat="item in list.items" data-number="{{ $index }}">
                         <h3>{{ item.title }}</h3><br/>
                         <h4>{{ item.description }}</h4>
+                        <button ng-click="removeListItem(id, $index)">Remove item</button>
                     </li>
                 </ul>
             </li>

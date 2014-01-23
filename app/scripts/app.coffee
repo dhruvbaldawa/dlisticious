@@ -40,15 +40,25 @@ dApp.factory 'StorageService', ['$http', '$q', 'storage', ($http, $q, storage) -
     removeList: (id) ->
         delete _list_registry[id]
         updateLocalStorage()
+        return true
 
     addItem: (id, item) ->
-        _list_registry[id].items.push(item)
-        updateLocalStorage()
+        if item?
+            _list_registry[id].items.push(item)
+            updateLocalStorage()
+            return true
+        else
+            return false
 
     removeItem: (id, index) ->
-        delete _list_registry[list].items[index]
-        updateLocalStorage()
+        if index < _list_registry[id].items.length
+            _list_registry[id].items.splice(index, 1)
+            updateLocalStorage()
+            return true
+        else
+            return false
 
+    # @TODO: make this truly "private", only read.. no writes
     list_registry: _list_registry
 ]
 
@@ -78,6 +88,14 @@ dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, Stor
 
         if not StorageService.addItem(list_id, item)
             alert 'Error adding list item'
+
+    $scope.removeList = (list_id) ->
+        if StorageService.removeList(list_id)
+            alert 'list removed'
+
+    $scope.removeListItem = (list_id, index) ->
+        if StorageService.removeItem(list_id, index)
+            alert 'item removed'
 
 ]
 
