@@ -3,3 +3,8 @@
 html {
     /* Defaults css for cssmin process */
 }
+
+ul.gridster li {
+    background: lightgray;
+    overflow: scroll;
+}
