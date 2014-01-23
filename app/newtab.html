@@ -1,7 +1,8 @@
 <!doctype html>
-<html ng-app="dApp" ng-csp>
+<html lang="en" ng-app="dApp" ng-csp>
     <head>
         <!-- build:css styles/style.css -->
+        <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
         <link href="styles/main.css" rel="stylesheet">
         <link href="lib/gridster/jquery.gridster.css" rel="stylesheet">
         <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
@@ -9,6 +10,7 @@
         <!-- build:js scripts/lib.js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="lib/gridster/jquery.gridster.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="lib/angularLocalStorage.js"></script>
@@ -18,9 +20,9 @@
         <script src="scripts/app.js"></script>
         <!-- endbuild -->
     </head>
-    <body ng-controller="ListCtrl">
+    <body ng-controller="ListCtrl" class="container">
         <h1>dListicious!</h1>
-        <h2>Add List</h2>
+<!--         <h2>Add List</h2>
         <form ng-submit="addList($event)">
             Title: <input type="text" name="title" required />
             <input type="submit" name="submit" value="Create List" />
@@ -44,6 +46,86 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul> -->
+        <div class="row">
+            <ul class="col-md-4 column">
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+            </ul>
+            <ul class="col-md-4 column">
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+            </ul>
+            <ul class="col-md-4 column">
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+                <li class="widget">
+                    <div class="widget-head">
+                        <h4>Head</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>Content</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>
