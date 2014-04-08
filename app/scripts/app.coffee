@@ -71,10 +71,11 @@ dApp.controller 'ListCtrl', ['$scope', '$q', 'StorageService', ($scope, $q, Stor
     # sorry for the small name, but this saves me from watch expressions.
     $scope.lr = StorageService.list_registry
     $scope.addListFormError = ''  # move this to an alert later.
-    $scope.items = [['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'],['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'],['foo', 'bar', 'choke', 'fee', 'fyi', 'ty']]
+    $scope.items = [['1', '2', '3'],['a', 'b', 'c'],['i', 'ii', 'iii']]
     $scope.sortableOptions =
         placeholder: "widget",
-        connectWith: ".column"
+        connectWith: ".column",
+        handle: ".widget-head"
 
     $scope.addList = ($event) ->
         title = $event.target.title.value

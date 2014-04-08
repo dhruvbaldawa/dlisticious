@@ -76,10 +76,11 @@
     '$scope', '$q', 'StorageService', function($scope, $q, StorageService) {
       $scope.lr = StorageService.list_registry;
       $scope.addListFormError = '';
-      $scope.items = [['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'], ['foo', 'bar', 'choke', 'fee', 'fyi', 'ty'], ['foo', 'bar', 'choke', 'fee', 'fyi', 'ty']];
+      $scope.items = [['1', '2', '3'], ['a', 'b', 'c'], ['i', 'ii', 'iii']];
       $scope.sortableOptions = {
         placeholder: "widget",
-        connectWith: ".column"
+        connectWith: ".column",
+        handle: ".widget-head"
       };
       $scope.addList = function($event) {
         var title;
